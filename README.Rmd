@@ -1,0 +1,57 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+
+options(crayon.enabled = FALSE, cli.unicode = FALSE)
+```
+# usedrake
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of usedrake is to make it easy to use drake. The package sets up the 
+files to use for a drake analysis.
+
+## Installation
+
+You can install usedrake from Github with:
+
+``` r
+remotes::install_github("tjmahr/usedrake")
+```
+
+## Example
+
+For the purposes of demonstration, create a one-off empty directory.
+
+```{r}
+# For the purposes of demonstration, work inside of a temporary folder
+one_off_dir <- file.path(tempdir(), "usedrake-demo")
+dir.create(one_off_dir)
+
+# Everything is empty
+dir(one_off_dir, recursive = TRUE)
+```
+
+`use_drake()` will set up the project infrastruture in the folder.
+
+```{r}
+usedrake::use_drake(one_off_dir)
+```
+
+These are the files that were created.
+
+```{r}
+dir(one_off_dir, recursive = TRUE)
+```
+
