@@ -11,5 +11,20 @@ plan <- drake_plan(
     output_file = file_out(here::here("analysis/example.html")),
     quiet = TRUE,
     encoding = "UTF-8"
-  )
+  ),
+
+  spellcheck_exceptions = c(
+    character(0)
+  ),
+
+  spellcheck_report = spelling::spell_check_files(
+    knitr_in(here::here("analysis/example.Rmd")),
+    ignore = spellcheck_exceptions
+  ),
+
+  # Prints out spelling mistakes when any are found
+  spellcheck_report_results = target(
+    command = print(spellcheck_report),
+    trigger = trigger(condition = nrow(spellcheck_report) > 0)
+  ),
 )
