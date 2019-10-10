@@ -79,19 +79,24 @@ plan <- drake_plan(
   })(),
 
 
-  # spellcheck_exceptions = c(
-  #   character(0)
-  # ),
-  #
-  # spellcheck_report = spelling::spell_check_files(
-  #   knitr_in(here::here("analysis/example.Rmd")),
-  #   ignore = spellcheck_exceptions
-  # ),
-  #
-  # # Prints out spelling mistakes when any are found
-  # spellcheck_report_results = target(
-  #   command = print(spellcheck_report),
-  #   trigger = trigger(condition = nrow(spellcheck_report) > 0)
-  # ),
+  spellcheck_exceptions = c(
+    character(0)
+  ),
+
+  spellcheck_notebook = spelling::spell_check_files(
+    file_in(
+      !! here::here(
+        "notebook",
+        list.files(here::here("notebook"), "(index.Rmd)|(\\d.+.Rmd)")
+      )
+    ),
+    ignore = spellcheck_exceptions
+  ),
+
+  # Prints out spelling mistakes when any are found
+  spellcheck_report_results = target(
+    command = print(spellcheck_notebook),
+    trigger = trigger(condition = nrow(spellcheck_notebook) > 0)
+  ),
 
 )

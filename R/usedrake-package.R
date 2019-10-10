@@ -141,7 +141,7 @@ create_notebook_page <- function(date = NULL, slug = NULL, notebook_dir = "noteb
   to_create <- file.path(notebook_dir, filename)
 
   usethis::use_template(
-    "notebook/0000-00-00-new-post.Rmd",
+    "notebook/0000-00-00-demo-post.Rmd",
     to_create,
     package = "usedrake",
     data = list(date = date_title),

@@ -1,5 +1,5 @@
 ---
-title: "Book Title"
+title: "Notebook title"
 author: "Author Name"
 date: '`r format(Sys.time(), "Updated on %A, %B %d, %Y %I:%M %p")`'
 site: bookdown::bookdown_site

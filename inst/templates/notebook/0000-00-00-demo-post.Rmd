@@ -1,0 +1,13 @@
+## {{date}}
+
+
+```{r packages}
+library(ggplot2)
+```
+
+```{r content}
+fit <- drake::readd(fit)
+fit
+
+drake::readd(hist)
+```
