@@ -1,2 +1,3 @@
-## {{date}}
+## {{date}} (Entry title)
 
+<small>Source: <code>`r knitr::current_input()`</code></small>

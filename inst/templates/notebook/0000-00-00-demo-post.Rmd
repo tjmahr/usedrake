@@ -1,5 +1,6 @@
-## {{date}}
+## {{date}} (Demo entry)
 
+<small>Source: <code>`r knitr::current_input()`</code></small>
 
 ```{r packages}
 library(ggplot2)
