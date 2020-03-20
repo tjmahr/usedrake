@@ -53,6 +53,7 @@ use_drake <- function(path = ".", open = FALSE) {
   )
 }
 
+#' @export
 use_drake_notebook <- function(path = ".", open = FALSE) {
   here::set_here(path)
   usethis::local_project(path = path, quiet = TRUE)
@@ -117,7 +118,13 @@ use_drake_notebook <- function(path = ".", open = FALSE) {
 # here::set_here(test)
 # usethis::use_directory("notebook")
 
-create_notebook_page <- function(date = NULL, slug = NULL, notebook_dir = "notebook", open = FALSE) {
+#' @export
+create_notebook_page <- function(
+  date = NULL,
+  slug = NULL,
+  notebook_dir = "notebook",
+  open = FALSE
+) {
   if (is.null(date)) {
     date_data <- Sys.Date()
     date <- format(date_data, "%Y-%m-%d")
@@ -150,4 +157,38 @@ create_notebook_page <- function(date = NULL, slug = NULL, notebook_dir = "noteb
 
   # usethis::ui_done("{usethis::ui_path(to_create)} created")
   message(to_create, " created")
+}
+
+#' @export
+datestamp_current_notebook <- function(
+  notebook_dir  = "notebook",
+  notebook_file = "notebook.html",
+  new_file_slug = "notebook"
+) {
+  old_path <- file.path(notebook_dir, "docs", notebook_file)
+
+  if (!file.exists(old_path)) {
+    usethis::ui_stop("File does not exist: {usethis::ui_path(old_path)}")
+  }
+
+  datestamp <- format(Sys.Date(), "%Y-%m-%d")
+  ext <- tools::file_ext(notebook_file)
+
+  new_file <- paste0(datestamp, "-", new_file_slug, ".", ext)
+
+  new_path <- file.path(notebook_dir, "docs", new_file)
+
+
+  if (file.exists(new_path)) {
+    usethis::ui_info("Overwriting file: {usethis::ui_path(new_path)}")
+  }
+
+  success <- file.copy(old_path, new_path, overwrite = TRUE)
+
+  if (success) {
+    usethis::ui_done(
+      "{usethis::ui_path(old_path)} copied to {usethis::ui_path(new_path)}"
+    )
+  }
+  invisible(success)
 }

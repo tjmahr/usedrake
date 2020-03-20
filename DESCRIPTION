@@ -11,6 +11,8 @@ Encoding: UTF-8
 LazyData: true
 Imports: 
     usethis,
-    here
+    here,
+    tools
 URL: https://github.com/tjmahr/usedrake
 BugReports: https://github.com/tjmahr/usedrake/issues
+RoxygenNote: 7.1.0
