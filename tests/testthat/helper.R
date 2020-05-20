@@ -1,7 +1,8 @@
 # Adapted from Jenny Bryan's tutorial
 # https://www.tidyverse.org/blog/2020/04/self-cleaning-test-fixtures/
 create_local_project <- function(dir = fs::file_temp(), env = parent.frame()) {
-  old_project <- usethis::proj_get()    # --- Record starting state ---
+  # --- Record starting state ---
+  old_project <- usethis::proj_get()
 
   withr::defer({
     # --- Defer The Undoing ---
