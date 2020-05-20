@@ -7,103 +7,47 @@
 ## usethis namespace: end
 NULL
 
-use_drake <- function(path = ".", open = FALSE) {
-  here::set_here(path)
-  usethis::local_project(path = path, quiet = TRUE)
-
-  usethis::use_directory("R")
-  usethis::use_directory("data")
-  usethis::use_directory("analysis")
-
-  usethis::use_template(
-    "packages.R",
-    "R/packages.R",
-    package = "usedrake",
-    open = open
-  )
-  usethis::use_template(
-    "plan.R",
-    "R/plan.R",
-    package = "usedrake",
-    open = open
-  )
-  usethis::use_template(
-    "functions.R",
-    "R/functions.R",
-    package = "usedrake",
-    open = open
-  )
-
-  usethis::use_template(
-    "example.Rmd",
-    "analysis/example.Rmd",
-    package = "usedrake",
-    open = open
-  )
-
-
-  usethis::use_template("_drake.R", package = "usedrake")
-  usethis::use_template("Makefile", package = "usedrake")
-
-  usethis::ui_todo(
-    paste(
-      "Set",
-      usethis::ui_field("Project Options > Build Tools"),
-      "to use a Makefile")
-  )
-}
 
 #' @export
-use_drake_notebook <- function(path = ".", open = FALSE) {
+use_drake_notebook <- function(path = ".") {
   here::set_here(path)
   usethis::local_project(path = path, quiet = TRUE)
 
+  # Layout the groundwork for future customizability
+  notebook_dir <- "notebook"
+  notebook_file <- function(x) {
+    file.path(notebook_dir, x)
+  }
+
   usethis::use_directory("R")
   usethis::use_directory("data")
-  usethis::use_directory("notebook")
-  usethis::use_directory("notebook/assets")
+  usethis::use_directory(notebook_dir)
+  usethis::use_directory(notebook_file("assets"))
 
-  usethis::use_template(
-    "packages.R",
-    "R/packages.R",
-    package = "usedrake",
-    open = open
-  )
-  usethis::use_template(
-    "notebook/plan.R",
-    "R/plan.R",
-    package = "usedrake",
-    open = open
-  )
-  usethis::use_template(
-    "functions.R",
-    "R/functions.R",
-    package = "usedrake",
-    open = open
-  )
+  usethis::use_template("packages.R", "R/packages.R", package = "usedrake")
+  usethis::use_template("notebook/plan.R", "R/plan.R", package = "usedrake")
+  usethis::use_template("functions.R", "R/functions.R", package = "usedrake")
 
   usethis::use_template(
     "notebook/index.Rmd",
-    "notebook/index.Rmd",
-    package = "usedrake",
-    open = open
+    notebook_file("index.Rmd"),
+    package = "usedrake"
   )
   usethis::use_template(
     "notebook/knitr-helpers.R",
-    "notebook/knitr-helpers.R",
-    package = "usedrake",
-    open = open
+    notebook_file("knitr-helpers.R"),
+    package = "usedrake"
   )
   usethis::use_template(
     "notebook/0000-00-00-references.Rmd",
-    "notebook/0000-00-00-references.Rmd",
-    package = "usedrake",
-    open = open
+    notebook_file("0000-00-00-references.Rmd"),
+    package = "usedrake"
   )
 
-  create_notebook_page(notebook_dir = "notebook", open = open)
   usethis::use_template("_drake.R", package = "usedrake")
   usethis::use_template("Makefile", package = "usedrake")
+
+  create_notebook_page(notebook_dir = notebook_dir, open = TRUE)
 
   usethis::ui_todo(
     paste(
@@ -113,17 +57,13 @@ use_drake_notebook <- function(path = ".", open = FALSE) {
   )
 }
 
-# test <- tempdir()
-# setwd(test)
-# here::set_here(test)
-# usethis::use_directory("notebook")
 
 #' @export
 create_notebook_page <- function(
-  date = NULL,
   slug = NULL,
+  date = NULL,
   notebook_dir = "notebook",
-  open = FALSE
+  open = TRUE
 ) {
   if (is.null(date)) {
     date_data <- Sys.Date()
@@ -141,7 +81,7 @@ create_notebook_page <- function(
     slug <- ""
     sep <- ""
   } else {
-    sep <- ""
+    sep <- "-"
   }
   filename <- paste0(date, sep, slug, ".Rmd")
 
@@ -155,8 +95,8 @@ create_notebook_page <- function(
     open = open
   )
 
-  # usethis::ui_done("{usethis::ui_path(to_create)} created")
-  message(to_create, " created")
+  usethis::ui_done("{usethis::ui_path(to_create)} created")
+  # message(to_create, " created")
 }
 
 #' @export

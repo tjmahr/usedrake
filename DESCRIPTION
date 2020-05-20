@@ -12,7 +12,10 @@ LazyData: true
 Imports: 
     usethis,
     here,
-    tools
+    tools,
+    git2r
 URL: https://github.com/tjmahr/usedrake
 BugReports: https://github.com/tjmahr/usedrake/issues
 RoxygenNote: 7.1.0
+Suggests: 
+    testthat

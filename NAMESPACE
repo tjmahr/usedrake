@@ -2,4 +2,7 @@
 
 export(create_notebook_page)
 export(datestamp_current_notebook)
+export(notebook_browse)
+export(notebook_peek)
+export(notebook_reset)
 export(use_drake_notebook)

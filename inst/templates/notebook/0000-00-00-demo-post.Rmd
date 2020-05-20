@@ -1,14 +1,17 @@
+```{r setup-entry}
+# library(ggplot2)
+
+# fit <- drake::readd(fit)
+# fit
+```
+
+
 ## {{date}} (Demo entry)
 
 <small>Source: <code>`r knitr::current_input()`</code></small>
 
-```{r packages}
-library(ggplot2)
-```
+
 
 ```{r content}
-fit <- drake::readd(fit)
-fit
 
-drake::readd(hist)
 ```
