@@ -1,4 +1,4 @@
-```{r setup-entry}
+```{r setup, include = FALSE}
 # library(ggplot2)
 
 # fit <- drake::readd(fit)

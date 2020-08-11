@@ -8,8 +8,6 @@ plan <- drake_plan(
   # bookdown uses yaml configuration files to set options for the package.
   # We want to keep the configuration close to the build workflow, so I have
   # drake create the files using the ymlthis package.
-  #
-  # glue::glue() ignores the leading spaces from code-formatting.
   notebook_output_yaml_data = ymlthis::yml_empty() %>%
     ymlthis::yml_output(
       bookdown::markdown_document2(
