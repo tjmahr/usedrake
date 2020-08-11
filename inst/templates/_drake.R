@@ -4,6 +4,7 @@
 # # If you have problems with special characters being corrupted by source(),
 # # try this alternative.
 # source_utf8 <- function(f) {
+# # https://stackoverflow.com/a/49127139/1084259
 #   l <- readLines(f, encoding = "UTF-8")
 #   eval(parse(text = l, encoding = "UTF-8"), envir = .GlobalEnv)
 # }
