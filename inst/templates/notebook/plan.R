@@ -25,12 +25,7 @@ plan <- drake_plan(
   ),
 
   # Find the chapters and put them in reverse-chronological order
-  notebook_path_chapters = here::here(
-    "notebook",
-    rev(list.files(file_in(!! here::here("notebook")), "\\d.+.Rmd"))
-  ),
-  notebook_path_index = here::here("notebook", "index.Rmd"),
-  notebook_path_all = c(notebook_path_index, notebook_path_chapters),
+  notebook_rmd_paths = file_in(!! usedrake::notebook_rmd_collate("notebook")),
 
   # The chapters are configured in the _bookdown.yml file.
   notebook_bookdown_yaml_data = ymlthis::yml_empty() %>%
@@ -40,7 +35,7 @@ plan <- drake_plan(
       delete_merged_file = TRUE,
       new_session = TRUE,
       before_chapter_script = "knitr-helpers.R",
-      rmd_files = basename(notebook_path_all),
+      rmd_files = basename(notebook_rmd_paths),
     ),
 
   notebook_bookdown_yaml_file = yaml::write_yaml(
@@ -50,12 +45,7 @@ plan <- drake_plan(
 
   notebook = {
     # Tell drake to find and check all the input files of the notebook
-    knitr_in(
-      !! here::here(
-        "notebook",
-        list.files(here::here("notebook"), "(index.Rmd)|(\\d.+.Rmd)")
-      )
-    )
+    knitr_in( !! usedrake::notebook_rmd_collate("notebook"))
     # file_in(!! here::here("notebook/assets/apa.csl"))
     # file_in(!! here::here("notebook/assets/refs.bib"))
     file_in(!! here::here("notebook/knitr-helpers.R"))
@@ -71,12 +61,7 @@ plan <- drake_plan(
   ),
 
   spellcheck_notebook = spelling::spell_check_files(
-    file_in(
-      !! here::here(
-        "notebook",
-        list.files(here::here("notebook"), "(index.Rmd)|(\\d.+.Rmd)")
-      )
-    ),
+    file_in(!! usedrake::notebook_rmd_collate("notebook")),
     ignore = spellcheck_exceptions
   ),
 

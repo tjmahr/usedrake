@@ -10,7 +10,8 @@ notebook_browse(file = "notebook/docs/notebook.html")
 notebook_peek(file = "notebook/docs/notebook.html")
 }
 \arguments{
-\item{file}{path to the current notebook file. Defaults to `"notebook/docs/notebook.html"`}
+\item{file}{path to the current notebook file. Defaults to
+`"notebook/docs/notebook.html"`}
 }
 \value{
 `NULL`. The function is called for its effects on the project files.

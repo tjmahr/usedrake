@@ -4,11 +4,11 @@
 #' default, it throws an error if there are uncommitted .rmd files. This is a
 #' dangerous function. Proceed with caution.
 #'
-#' @param path notebook folder. Defaults to `"notebook"`.
+#' @param notebook_path notebook folder. Defaults to `"notebook"`.
 #' @param force whether to discard uncommited .rmd files. Defaults to `FALSE`.
 #' @return `NULL`. The function is called for its effects on the project files.
 #' @export
-notebook_reset <- function(path = "notebook", force = FALSE) {
+notebook_reset <- function(notebook_path = "notebook", force = FALSE) {
   uses_git <- dir.exists(".git")
 
   if (!uses_git) {
@@ -31,14 +31,14 @@ notebook_reset <- function(path = "notebook", force = FALSE) {
   }
 
   usethis::ui_info(
-    "Deleting uncommitted files in {usethis::ui_path(path)}"
+    "Deleting uncommitted files in {usethis::ui_path(notebook_path)}"
   )
   unlink(in_notebook, recursive = TRUE)
 
   usethis::ui_info(
-    "Resetting {usethis::ui_path(path)} folder to last commit"
+    "Resetting {usethis::ui_path(notebook_path)} folder to last commit"
   )
-  git2r::checkout(repo, path = path)
+  git2r::checkout(repo, path = notebook_path)
   invisible(NULL)
 }
 
@@ -67,3 +67,37 @@ notebook_peek <- function(file = "notebook/docs/notebook.html") {
   rstudioapi::viewer(out)
   invisible(NULL)
 }
+
+#' Gather the paths to the notebook's rmd files
+#'
+#' `notebook_rmd_list()` lists the files in lexicographic order.
+#' `notebook_rmd_collate()` puts them in knitting order (with the `index.Rmd`
+#' first and the posts in reverse-chronological order).
+#'
+#' @param notebook_path notebook folder. Defaults to `"notebook"`.
+#' @return a vector of the paths to the rmd files.
+#' @rdname notebook_rmd_list
+#' @export
+notebook_rmd_list <- function(notebook_path = "notebook") {
+  list.files(
+    path = here::here(notebook_path),
+    pattern = "(index.Rmd)|(\\d.+.Rmd)",
+    full.names = TRUE
+  )
+}
+
+#' @rdname notebook_rmd_list
+#' @export
+notebook_rmd_collate <- function(notebook_path = "notebook") {
+  index <-  here::here(notebook_path, "index.Rmd")
+
+  posts <- list.files(
+    path = here::here(notebook_path),
+    pattern = "\\d.+.Rmd",
+    full.names = TRUE
+  )
+
+  c(index, rev(posts))
+}
+
+

@@ -4,10 +4,10 @@
 \alias{notebook_reset}
 \title{Reset the notebook directory to the last git commit}
 \usage{
-notebook_reset(path = "notebook", force = FALSE)
+notebook_reset(notebook_path = "notebook", force = FALSE)
 }
 \arguments{
-\item{path}{notebook folder. Defaults to `"notebook"`.}
+\item{notebook_path}{notebook folder. Defaults to `"notebook"`.}
 
 \item{force}{whether to discard uncommited .rmd files. Defaults to `FALSE`.}
 }
